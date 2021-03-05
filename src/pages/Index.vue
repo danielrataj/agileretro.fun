@@ -92,7 +92,7 @@ export default {
     },
 
     getRandomColor () {
-      const colors = ['text-red', 'text-pink', 'text-purple']
+      const colors = ['text-red', 'text-pink', 'text-purple', 'text-indigo', 'text-blue', 'text-cyan', 'text-green', 'text-orange', 'text-brown']
       this.color = colors.sort(() => 0.5 - Math.random())[0]
     }
   }
