@@ -5,10 +5,12 @@
         <img src="~/assets/icons/github.svg" width="20" height="20" />
       </a>
     </div>
-    <div class="window-height window-width row justify-center items-center text-center">
+    <div class="fixed-center text-center">
       <div v-if="item">
-        <h1 class="text-h2">{{ item.line }}</h1>
-        <q-linear-progress color="grey-1" class="q-mt-sm" :value="progress" reverse size="sm" />
+        <h1 class="text-h2 box-with-item" style="width: 100%">
+          {{ item.line }}
+          <q-linear-progress color="grey-1" class="q-mt-lg" :value="progress" reverse size="sm" />
+        </h1>
       </div>
       <q-inner-loading :showing="loading">
         <q-spinner-ball size="80px" color="primary" />
@@ -18,7 +20,7 @@
 </template>
 
 <script>
-const RETRO_FILE_URL = process.env.RETRO_FILE_URL
+// const RETRO_FILE_URL = process.env.RETRO_FILE_URL
 
 export default {
   name: 'PageIndex',
@@ -47,7 +49,13 @@ export default {
   methods: {
     async fetch () {
       try {
-        this.items = await this.$axios.get(`${RETRO_FILE_URL}/${this.$i18n.locale}/retro.json`).then(result => result.data)
+        // this.items = await this.$axios.get(`${RETRO_FILE_URL}/${this.$i18n.locale}/retro.json`).then(result => result.data)
+        this.items = [
+          {
+            line: 'Na toaletě často chybí papír a to je tragiš.'
+          }
+        ]
+
         // randomize array
         this.items.sort(() => 0.5 - Math.random())
         this.backupItems = [...this.items]
@@ -87,3 +95,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  .box-with-item
+    width: 90%
+</style>
