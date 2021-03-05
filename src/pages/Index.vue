@@ -7,7 +7,7 @@
     </div>
     <div class="fixed-center text-center">
       <div v-if="item">
-        <h1 class="text-h2 box-with-item" style="width: 100%">
+        <h1 class="text-h2 box-with-item" style="width: 100%" :class="color">
           {{ item.line }}
           <q-linear-progress color="grey-1" class="q-mt-lg" :value="progress" reverse size="sm" />
         </h1>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-// const RETRO_FILE_URL = process.env.RETRO_FILE_URL
+const RETRO_FILE_URL = process.env.RETRO_FILE_URL
 
 export default {
   name: 'PageIndex',
@@ -32,7 +32,8 @@ export default {
       interval: null,
       progressInterval: null,
       item: null,
-      progress: 0
+      progress: 0,
+      color: 'text-black'
     }
   },
   created () {
@@ -49,12 +50,7 @@ export default {
   methods: {
     async fetch () {
       try {
-        // this.items = await this.$axios.get(`${RETRO_FILE_URL}/${this.$i18n.locale}/retro.json`).then(result => result.data)
-        this.items = [
-          {
-            line: 'Na toaletě často chybí papír a to je tragiš.'
-          }
-        ]
+        this.items = await this.$axios.get(`${RETRO_FILE_URL}/${this.$i18n.locale}/retro.json`).then(result => result.data)
 
         // randomize array
         this.items.sort(() => 0.5 - Math.random())
@@ -78,6 +74,7 @@ export default {
     setAllIntervals () {
       this.interval = setInterval(() => {
         this.selectRandom()
+        this.getRandomColor()
         this.progress = 0
       }, 5000)
 
@@ -85,12 +82,18 @@ export default {
         this.progress = this.progress + (5 / 500)
       }, 50)
     },
+
     selectRandom () {
       if (this.items.length === 0) {
         this.items = [...this.backupItems]
       }
 
       this.item = this.items.shift()
+    },
+
+    getRandomColor () {
+      const colors = ['text-red', 'text-pink', 'text-purple']
+      this.color = colors.sort(() => 0.5 - Math.random())[0]
     }
   }
 }
