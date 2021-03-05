@@ -6,11 +6,14 @@
       </a>
     </div>
     <div class="fixed-center text-center">
-      <div v-if="item">
-        <h1 class="text-h2 box-with-item" style="width: 100%" :class="color">
+      <div v-if="item" class="box-with-item">
+        <h1 class="text-h2 box-with-item" :class="color">
           {{ item.line }}
-          <q-linear-progress color="grey-1" class="q-mt-lg" :value="progress" reverse size="sm" />
         </h1>
+        <div class="text-right text-grey">
+          <q-icon name="person" /> {{ item.author }}
+        </div>
+        <q-linear-progress color="grey-1" class="q-mt-lg" :value="progress" reverse size="sm" />
       </div>
       <q-inner-loading :showing="loading">
         <q-spinner-ball size="80px" color="primary" />
